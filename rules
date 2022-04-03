@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# Uncomment this to change the hardening options
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+CMAKE = cmake
+CMAKE_JOBS =
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j$(NUMJOBS)
+	CMAKE_JOBS += -j$(NUMJOBS)
+endif
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_clean:
+	#NOT#cmake --build build -- VERBOSE=1 clean
+	# FIXME: keep in sync with dockerfile ..
+	git clean -dfx --exclude=debian/ --exclude=gamepacks/ --exclude=tools/bspc/
+
+override_dh_auto_configure:
+	# No need to get ./gamapacks-manager stuff here. We do
+	# DOWNLOAD_GAMEPACKS=OFF. The dockerfile setup will have
+	# downloaded the necessary stuff.
+	#
+	# Building with Debug mode on because we want debug symbols.
+	# They'll get moved to the dbgsym packages, so they won't take
+	# up space when not needed. We still get -O2 optimization.
+	cmake -G "Unix Makefiles" -S. -Bbuild \
+	    -DCMAKE_BUILD_TYPE=Debug \
+	    -DCMAKE_INSTALL_PREFIX=/usr \
+	    -DFHS_INSTALL=ON \
+	    -DBUNDLE_LIBRARIES=OFF \
+	    -DBUILD_RADIANT=ON \
+	    -DBUILD_TOOLS=ON \
+	    -DRADIANT_ABOUTMSG="Custom build by wdoekes" \
+	    -DBUILD_DAEMONMAP=ON \
+	    -DBUILD_CRUNCH=ON \
+	    -DDOWNLOAD_GAMEPACKS=OFF \
+	    .
+
+override_dh_auto_build:
+	cmake --build build -- $(CMAKE_JOBS) VERBOSE=1
+	$(MAKE) -C tools/bspc
+
+override_dh_auto_test:
+	# Nothing to test..
+	true
+
+override_dh_auto_install:
+	# DESTDIR=/build/netradiant/debian/tmp AM_UPDATE_INFO_DIR=no
+	#   INSTALL="install --strip-program=true"
+	# (why would we strip(1) here? is that necessary?)
+	cmake --build build -- VERBOSE=1 DESTDIR=$(CURDIR)/debian/tmp install
+	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/

@@ -1,0 +1,66 @@
+Source: netradiant
+Priority: optional
+Maintainer: Walter Doekes <wjdoekes+netradiant@osso.nl>
+# "How to build" for 20.04 (from upstream README), slightly adapted.
+Build-Depends:
+ debhelper (>= 9),
+ cmake,
+ libx11-dev,
+ libgtk2.0-dev,
+ libgtkglext1-dev,
+ libxml2-dev,
+ libjpeg-dev,
+ libwebp-dev,
+ libminizip-dev,
+# This is enough to build NetRadiant but you may also install those
+# extra packages to get proper GTK2 graphical and sound themes:
+ gnome-themes-extra,
+ gtk2-engines-murrine,
+ libcanberra-gtk-module
+# subversion,
+# unzip,
+# wget,
+#python2 | python (<< 3),
+#python3,
+#subversion,
+Standards-Version: 3.9.6
+Section: games
+Homepage: https://netradiant.gitlab.io/
+Vcs-Browser: https://gitlab.com/xonotic/netradiant
+Vcs-Git: https://gitlab.com/xonotic/netradiant
+
+Package: netradiant
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Suggests: netradiant-game-quake3
+Conflicts: gtkradiant
+Description: netradiant contains (xonotic) NetRadiant and tools
+ NetRadiant is the open source cross platform level editor for idTech
+ games. This package contains the radiant editor, q3map2 compilers and
+ (TTimo) bspc bot file builder.
+
+#Package: netradiant-game-quake2
+#Architecture: all
+#Pre-Depends: ${misc:Pre-Depends}
+#Depends:
+# ${shlibs:Depends},
+# ${misc:Depends}
+#Suggests: netradiant
+#Description: netradiant Quake2 (q2) contains the Quake II game files
+# NetRadiant is the open source cross platform level editor for idTech
+# games.
+
+Package: netradiant-game-quake3
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Suggests: netradiant
+Description: netradiant Quake3 (q3) contains the Quake III Arena game files
+ NetRadiant is the open source cross platform level editor for idTech
+ games.

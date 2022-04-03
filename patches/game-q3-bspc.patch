@@ -1,0 +1,62 @@
+Description: the bot builder is called bspc, not mbspc
+
+--- a/gamepacks/urt.game/default_build_menu.xml
++++ b/gamepacks/urt.game/default_build_menu.xml
+@@ -6,7 +6,7 @@ build commands
+ -->
+ <project version="2.0">
+ <var name="q3map2">"[RadiantPath]q3map2.[ExecutableType]" -v<cond value="[MonitorAddress]"> -connect [MonitorAddress]</cond> -game quake3 -fs_basepath "[EnginePath]"<cond value="[GameName]"> -fs_game [GameName]</cond></var>
+-<var name="mbspc">"[RadiantPath]mbspc.[ExecutableType]"</var>
++<var name="bspc">"[RadiantPath]bspc.[ExecutableType]"</var>
+ <build name="Single: bsp">
+ <command>[q3map2] -meta "[MapFile]"</command>
+ </build>
+@@ -42,7 +42,7 @@ build commands
+ <command>[q3map2] -pk3 "[BspFile]"</command>
+ </build>
+ <build name="make .aas">
+-<command>[mbspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
++<command>[bspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
+ </build>
+ </project>
+ 
+--- a/gamepacks/q3.game/default_build_menu.xml
++++ b/gamepacks/q3.game/default_build_menu.xml
+@@ -6,7 +6,7 @@ build commands
+ -->
+ <project version="2.0">
+ <var name="q3map2">"[RadiantPath]q3map2.[ExecutableType]" -v<cond value="[MonitorAddress]"> -connect [MonitorAddress]</cond> -game quake3 -fs_basepath "[EnginePath]"<cond value="[GameName]"> -fs_game [GameName]</cond></var>
+-<var name="mbspc">"[RadiantPath]mbspc.[ExecutableType]"</var>
++<var name="bspc">"[RadiantPath]bspc.[ExecutableType]"</var>
+ <build name="Single: bsp">
+ <command>[q3map2] -meta "[MapFile]"</command>
+ </build>
+@@ -55,7 +55,7 @@ build commands
+ <command>[q3map2] -pk3 "[BspFile]"</command>
+ </build>
+ <build name="make .aas">
+-<command>[mbspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
++<command>[bspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
+ </build>
+ </project>
+ 
+--- a/gamepacks/quakelive.game/default_build_menu.xml
++++ b/gamepacks/quakelive.game/default_build_menu.xml
+@@ -6,7 +6,7 @@ build commands
+ -->
+ <project version="2.0">
+ <var name="q3map2">"[RadiantPath]q3map2.[ExecutableType]" -v<cond value="[MonitorAddress]"> -connect [MonitorAddress]</cond> -game quakelive -fs_basepath "[EnginePath]"<cond value="[GameName]"> -fs_game [GameName]</cond></var>
+-<var name="mbspc">"[RadiantPath]mbspc.[ExecutableType]"</var>
++<var name="bspc">"[RadiantPath]bspc.[ExecutableType]"</var>
+ <build name="Single: bsp">
+ <command>[q3map2] -meta "[MapFile]"</command>
+ </build>
+@@ -42,7 +42,7 @@ build commands
+ <command>[q3map2] -pk3 "[BspFile]"</command>
+ </build>
+ <build name="make .aas">
+-<command>[mbspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
++<command>[bspc] -forcesidesvisible -optimize -bsp2aas &quot;[BspFile]&quot;</command>
+ </build>
+ </project>
+ 

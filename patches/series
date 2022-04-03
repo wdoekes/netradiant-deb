@@ -1,0 +1,5 @@
+bspc-no-strip.patch
+bspc-do-not-leave-log-turds-for-nothing.patch
+bspc-fix-warnings.patch
+netradiant-paths.patch
+game-q3-bspc.patch
