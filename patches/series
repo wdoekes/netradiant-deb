@@ -1,6 +1,7 @@
 bspc-no-strip.patch
 bspc-do-not-leave-log-turds-for-nothing.patch
 bspc-fix-warnings.patch
+netradiant-no-g_string_free-assert.patch
 netradiant-no-move-map-symlink.patch
 netradiant-paths.patch
 game-q3-bspc.patch
