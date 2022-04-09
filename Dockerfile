@@ -57,18 +57,35 @@ RUN . /etc/os-release && fullversion="${upversion}-${debversion}+${osdistshort}$
 COPY ./netradiant/ /build/netradiant
 WORKDIR /build/netradiant
 
-# Check that bspc has checksum patch:
-RUN git -C tools/bspc branch --contains 8aa16e1986a1ac93f5992e144552eccab27035c1 | grep -xF '* master'
+# Fix (TTimo) bspc path, clean it, make SOURCE_VERSION, check for checksum patch:
+RUN cd tools/bspc && \
+    git clean -dfx && \
+    find . -name '.git' | \
+      xargs --no-run-if-empty -IX env DIR='X' sh -c 'DIR=${DIR%/.git} && git -C "$DIR" show >"$DIR/SOURCE_VERSION"' && \
+    git branch --contains 8aa16e1986a1ac93f5992e144552eccab27035c1 | grep -xF '* master'
+# Fix mbspc path, clean it, make SOURCE_VERSION, remove non-mbspc stuff:
+RUN cd netradiant-custom && \
+    git clean -dfx && \
+    cp libs/bytebool.h ./tools/mbspc/ && \
+    git show > ./tools/mbspc/SOURCE_VERSION && \
+    mv ./tools/mbspc ../tools/mbspc/ && \
+    sed -e 's@Ilibs@Itools/mbspc@' Makefile >../Makefile.mbspc && \
+    cd .. && \
+    rm -rf netradiant-custom
 
 # Make clean, reproducible tar, with 1970 timestamps, sorted, etc..
-RUN git clean -dfx --exclude=debian/ --exclude=tools/bspc/ --exclude=gamepacks/ && \
-    git -C tools/bspc clean -dfx
-RUN find . -name '.git' | \
-    xargs --no-run-if-empty -IX env DIR='X' sh -c 'DIR=${DIR%/.git} && git -C "$DIR" show >"$DIR/SOURCE_VERSION"'
-RUN find . -type d -name '.svn' | \
-    xargs --no-run-if-empty -IX env DIR='X' sh -c 'DIR=${DIR%/.svn} && svn info "$DIR" >"$DIR/SOURCE_VERSION"'
-# (TODO: remove ignores for stuff we don't have in netradiant)
-RUN cd .. && \
+RUN git clean -dfx \
+      --exclude=Makefile.mbspc \
+      --exclude=debian/ \
+      --exclude=gamepacks/ \
+      --exclude=tools/bspc/ \
+      --exclude=tools/mbspc/ && \
+    find . -name '.git' | \
+      xargs --no-run-if-empty -IX env DIR='X' sh -c 'DIR=${DIR%/.git} && git -C "$DIR" show >"$DIR/SOURCE_VERSION"' && \
+    find . -type d -name '.svn' | \
+      xargs --no-run-if-empty -IX env DIR='X' sh -c 'DIR=${DIR%/.svn} && svn info "$DIR" >"$DIR/SOURCE_VERSION"' && \
+    # (TODO: remove ignores for stuff we don't have in netradiant)
+    cd .. && \
     find netradiant '!' '(' \
       -type d -o -name .gitignore -o -name .gitmodules -o -path '*/.git/*' -o -path '*/.svn/*' \
       -o -name '*.srctrl*' -o -name '*.rej' -o -name '*.orig' -o -name '*.o' -o -name '*.pyc' ')' \

@@ -48,8 +48,9 @@ git_pull_or_clone netradiant https://gitlab.com/xonotic/netradiant.git
 version_suffix=$(git -C netradiant log --date=short --format='%cd' |
                  tr -d '-' | uniq -c | head -n1 | awk '{print $2 "+" $1}')
 
-# Add bspc to repo as a tool.
+# Add (m)bspc to repo as a tool.
 git_pull_or_clone netradiant/tools/bspc https://github.com/TTimo/bspc.git
+git_pull_or_clone netradiant/netradiant-custom https://github.com/Garux/netradiant-custom.git
 
 # Fetch game packs
 #GAMES='Quake2 Quake3'  # or 'all'

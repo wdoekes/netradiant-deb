@@ -22,9 +22,8 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@ --parallel
 
 override_dh_auto_clean:
-	#NOT#cmake --build build -- VERBOSE=1 clean
-	# FIXME: keep in sync with dockerfile ..
-	git clean -dfx --exclude=debian/ --exclude=gamepacks/ --exclude=tools/bspc/
+	# We let the dockerfile do the cleaning. No need to do again here.
+	true
 
 override_dh_auto_configure:
 	# No need to get ./gamapacks-manager stuff here. We do
@@ -50,6 +49,10 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	cmake --build build -- $(CMAKE_JOBS) VERBOSE=1
 	$(MAKE) -C tools/bspc
+	$(MAKE) -f Makefile.mbspc \
+	    DEPENDENCIES_CHECK=off CFLAGS='-g -O2' \
+	    RADIANT_ABOUTMSG='Custom build by wdoekes' \
+	    INSTALLDIR=tools/mbspc/build tools/mbspc/build/mbspc
 
 override_dh_auto_test:
 	# Nothing to test..
@@ -60,4 +63,8 @@ override_dh_auto_install:
 	#   INSTALL="install --strip-program=true"
 	# (why would we strip(1) here? is that necessary?)
 	cmake --build build -- VERBOSE=1 DESTDIR=$(CURDIR)/debian/tmp install
-	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/
+	# Have the TTimo bspc be bspc.old, the netradiant-custom mbspc
+	# the new, and make a symlink from bspc to mbspc.
+	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/bspc.old
+	install tools/mbspc/build/mbspc.* $(CURDIR)/debian/tmp/usr/bin/mbspc
+	ln -s mbspc $(CURDIR)/debian/tmp/usr/bin/bspc
