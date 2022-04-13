@@ -1,10 +1,7 @@
 Description: use /usr/lib/x86_64-linux-gnu/netradiant path
- This should be fixed though. Instead of using RADIANT_LIB_DIR+netradiant
- that path should already contain netradiant. Or.. we should have it use
- RADIANT_ADDONS_DIR instead, which already contains the basename.
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d865faf5..bfe0e1f0 100644
+index d865faf5..187accfe 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -119,21 +119,22 @@ set(RADIANT_BASENAME "netradiant" CACHE INTERNAL "...")
@@ -28,22 +25,22 @@ index d865faf5..bfe0e1f0 100644
      set(RADIANT_DATA_DIR ${RADIANT_SHARE_DIR}/${RADIANT_BASENAME})
  endif ()
  
-+add_definitions(-DRADIANT_LIB_DIR="${RADIANT_LIB_DIR}")
-+add_definitions(-DRADIANT_SHARE_DIR="${RADIANT_SHARE_DIR}")
++add_definitions(-DRADIANT_ADDONS_DIR="${RADIANT_ADDONS_DIR}")
++add_definitions(-DRADIANT_DATA_DIR="${RADIANT_DATA_DIR}")
 +
  set(GAMEPACKS_DOWNLOAD_DIR ${PROJECT_BINARY_DIR}/download CACHE PATH "Where to store downloaded game packs")
  
  #-----------------------------------------------------------------------
 diff --git a/radiant/environment.cpp b/radiant/environment.cpp
-index f7975518..45a32f31 100644
+index f7975518..f9c6c55d 100644
 --- a/radiant/environment.cpp
 +++ b/radiant/environment.cpp
 @@ -281,7 +281,11 @@ void environment_init( int argc, char const* argv[] ){
  
  	{
  		StringOutputStream buffer;
-+#ifdef RADIANT_LIB_DIR
-+		buffer << RADIANT_LIB_DIR << "/" << RADIANT_BASENAME << "/";
++#ifdef RADIANT_ADDONS_DIR
++		buffer << RADIANT_ADDONS_DIR << "/";
 +#else
  		buffer << app_path.c_str() << "../lib/" << RADIANT_BASENAME << "/";
 +#endif
@@ -54,8 +51,8 @@ index f7975518..45a32f31 100644
  
  	{
  		StringOutputStream buffer;
-+#ifdef RADIANT_SHARE_DIR
-+		buffer << RADIANT_SHARE_DIR << "/" << RADIANT_BASENAME << "/";
++#ifdef RADIANT_DATA_DIR
++		buffer << RADIANT_DATA_DIR << "/";
 +#else
  		buffer << app_path.c_str() << "../share/" << RADIANT_BASENAME << "/";
 +#endif
