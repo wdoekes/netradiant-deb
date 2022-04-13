@@ -1,3 +1,14 @@
+netradiant (1.5.0+20220215+3-0wjd1+ubu20.04) focal; urgency=medium
+
+  * Add patch to NOT replace symlink-to-map on Save
+  * Add patch to avoid warnings when calling netradiant --help
+  * Add bspc/msbspc so we can calculate bot paths (aas files)
+  * Clean up libdir (arch) patch
+  * Add patch so bobtoolz looks in the right directory
+  * Update docs
+
+ -- Walter Doekes <wjdoekes+netradiant@osso.nl>  Thu, 14 Apr 2022 00:02:35 +0200
+
 netradiant (1.5.0+20220215+3-0wjd0+ubu20.04) focal; urgency=medium
 
   * Initial release

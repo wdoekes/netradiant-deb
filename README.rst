@@ -33,14 +33,14 @@ subdirectory of) ``Dockerfile.out/``.
 
 The files may look similar to these::
 
-    -     16,387  netradiant_1.5.0+20220215+3-0wjd0+ubu20.04_amd64.buildinfo
-    -      3,023  netradiant_1.5.0+20220215+3-0wjd0+ubu20.04_amd64.changes
-    -  2,084,940  netradiant_1.5.0+20220215+3-0wjd0+ubu20.04_amd64.deb
-    -      9,992  netradiant_1.5.0+20220215+3-0wjd0+ubu20.04.debian.tar.xz
-    -      1,330  netradiant_1.5.0+20220215+3-0wjd0+ubu20.04.dsc
-    -  9,589,026  netradiant_1.5.0+20220215+3.orig.tar.gz
-    - 25,811,996  netradiant-dbgsym_1.5.0+20220215+3-0wjd0+ubu20.04_amd64.ddeb
-    -    616,072  netradiant-game-quake3_1.5.0+20220215+3-0wjd0+ubu20.04_all.deb
+    -     16,411  netradiant_1.5.0+20220215+3-0wjd1+ubu20.04_amd64.buildinfo
+    -      3,026  netradiant_1.5.0+20220215+3-0wjd1+ubu20.04_amd64.changes
+    -  2,225,780  netradiant_1.5.0+20220215+3-0wjd1+ubu20.04_amd64.deb
+    -     11,584  netradiant_1.5.0+20220215+3-0wjd1+ubu20.04.debian.tar.xz
+    -      1,333  netradiant_1.5.0+20220215+3-0wjd1+ubu20.04.dsc
+    -  9,997,240  netradiant_1.5.0+20220215+3.orig.tar.gz
+    - 26,300,636  netradiant-dbgsym_1.5.0+20220215+3-0wjd1+ubu20.04_amd64.ddeb
+    -    616,240  netradiant-game-quake3_1.5.0+20220215+3-0wjd1+ubu20.04_all.deb
 
 The ``netradiant*.orig.tar.gz`` contains source files from multiple
 repositories. With ``SOURCE_VERSION`` files in the directories,
