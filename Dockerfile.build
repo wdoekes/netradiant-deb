@@ -35,16 +35,15 @@ sed -i -e "1s/+\\(deb\\|ubu\\)[0-9.]*) [a-z]\\+;/+$_shortver) $oscodename;/" \
 
 git_pull_or_clone() {
     if test -d "$1"; then
-	#git -C "$1" pull --rebase
-	true  # XXX
+	git -C "$1" pull --rebase
     else
 	git clone --recursive "$2" "$1"
     fi
 }
 
 # Ensure we have NetRadiant.
-# You'll need to clone this:
 git_pull_or_clone netradiant https://gitlab.com/xonotic/netradiant.git
+# Improve versioning, based on the git version.
 version_suffix=$(git -C netradiant log --date=short --format='%cd' |
                  tr -d '-' | uniq -c | head -n1 | awk '{print $2 "+" $1}')
 

@@ -33,6 +33,13 @@ override_dh_auto_configure:
 	# Building with Debug mode on because we want debug symbols.
 	# They'll get moved to the dbgsym packages, so they won't take
 	# up space when not needed. We still get -O2 optimization.
+	#
+	# CRUNCH is enabled, because why not. We get libimagecrn.so.
+	# DAEMONMAP is enabled, also because it doesn't hurt. We get
+	# daemonmap in /usr/bin.
+	#
+	# Disabled GIT_VERSION, because we've already specified the
+	# version in a different fashion. It will record only 1.5.0n.
 	cmake -G "Unix Makefiles" -S. -Bbuild \
 	    -DCMAKE_BUILD_TYPE=Debug \
 	    -DCMAKE_INSTALL_PREFIX=/usr \
@@ -44,6 +51,7 @@ override_dh_auto_configure:
 	    -DBUILD_DAEMONMAP=ON \
 	    -DBUILD_CRUNCH=ON \
 	    -DDOWNLOAD_GAMEPACKS=OFF \
+	    -DGIT_VERSION=disabled \
 	    .
 
 override_dh_auto_build:
@@ -63,8 +71,8 @@ override_dh_auto_install:
 	#   INSTALL="install --strip-program=true"
 	# (why would we strip(1) here? is that necessary?)
 	cmake --build build -- VERBOSE=1 DESTDIR=$(CURDIR)/debian/tmp install
-	# Have the TTimo bspc be bspc.old, the netradiant-custom mbspc
+	# Have the TTimo bspc be bspc.ttimo, the netradiant-custom mbspc
 	# the new, and make a symlink from bspc to mbspc.
-	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/bspc.old
+	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/bspc.ttimo
 	install tools/mbspc/build/mbspc.* $(CURDIR)/debian/tmp/usr/bin/mbspc
 	ln -s mbspc $(CURDIR)/debian/tmp/usr/bin/bspc
