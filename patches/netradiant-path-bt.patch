@@ -1,0 +1,18 @@
+Description: fix bobtoolz exclusion list path
+ "Failed To Load Exclusion List: /usr/bin/plugins/bt/bt-el1.txt"
+ when clicking on Tree Planter. Now it's rightly loaded from
+ "/usr/share/netradiant/plugins/bt/bt-el1.txt".
+
+diff --git a/contrib/bobtoolz/misc.cpp b/contrib/bobtoolz/misc.cpp
+index f73c9787..b0f7bcfb 100644
+--- a/contrib/bobtoolz/misc.cpp
++++ b/contrib/bobtoolz/misc.cpp
+@@ -384,7 +384,7 @@ void MakeNormal( const vec_t* va, const vec_t* vb, const vec_t* vc, vec_t* out )
+ }
+ 
+ char* GetFilename( char* buffer, const char* filename ) {
+-	strcpy( buffer, GlobalRadiant().getAppPath() );
++	strcpy( buffer, GlobalRadiant().getDataPath() );
+ 	strcat( buffer, "plugins/" );
+ 	strcat( buffer, filename );
+ 	return buffer;
