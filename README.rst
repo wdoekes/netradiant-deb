@@ -26,7 +26,7 @@ Building NetRadiant for your distro
 
 Using Docker::
 
-    ./Dockerfile.build [optional args...]
+    ./Dockerfile.build [ubuntu/focal]
 
 If the build succeeds, the built Debian packages are placed inside (a
 subdirectory of) ``Dockerfile.out/``.
@@ -118,8 +118,11 @@ BUGS/TODO
   https://github.com/Garux/netradiant-custom/issues/7
 
 * Document/decide on handling the gamepacks:
+
   - do we want to record source versions, we don't right now;
+
   - use quake3 instead of q3 for naming, because of better findability;
+
   - only put one game in a gamepack, we may want to manually create
     gamepacks: the gtkradiant versions contain more contents (example
     maps).
