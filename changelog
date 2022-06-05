@@ -1,4 +1,17 @@
-netradiant (1.5.0+20220215+3-0wjd1+REL) stable; urgency=medium
+netradiant (1.5.0+20220215+3-0wjd2+REL) stable; urgency=medium
+
+  * Split up dpkg-buildpackage steps in Dockerfile. Other build
+    fixes/cleanups.
+  * The main package now Provides "gtkradiant-fork" so others can ensure
+    they're not conflicting with this one.
+  * Add build for Ubuntu/Jammy.
+  * TODO: chromium snaps can read in /usr/share/doc, but not in
+    /usr/share/*radiant/... So, we should really try to move the docs if
+    possible. Otherwise the Jump-to-help doesn't work very well.
+
+ -- Walter Doekes <wjdoekes+netradiant@osso.nl>  Sun, 05 Jun 2022 13:31:12 +0200
+
+netradiant (1.5.0+20220215+3-0wjd1+ubu20.04) focal; urgency=medium
 
   * Add patch to NOT replace symlink-to-map on Save
   * Add patch to avoid warnings when calling netradiant --help
