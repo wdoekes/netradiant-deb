@@ -1,5 +1,5 @@
 Description: fix warning when not really starting netradiant
- When doing netradian --help, you would see:
+ When doing netradiant --help, you would see:
  GLib-CRITICAL **: 19:22:11.618: g_string_free: assertion 'string != NULL'
  failed -- twice. This fixes it.
 

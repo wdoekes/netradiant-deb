@@ -20,6 +20,7 @@ debian/buster)  osdistshort=deb; oscodenum=10;;
 debian/stretch) osdistshort=deb; oscodenum=9;;
 debian/jessie)  osdistshort=deb; oscodenum=8;;
 debian/wheezy)  osdistshort=deb; oscodenum=7;;
+ubuntu/jammy)   osdistshort=ubu; oscodenum=22.04;;
 ubuntu/focal)   osdistshort=ubu; oscodenum=20.04;;
 ubuntu/bionic)  osdistshort=ubu; oscodenum=18.04;;
 ubuntu/xenial)  osdistshort=ubu; oscodenum=16.04;;
@@ -76,7 +77,7 @@ dockversion=$(echo build-${upname}-${upversion}-${debversion}-${oscodename} |
     sed -e 's/[^0-9A-Za-z_.-]/_/g')
 
 # Will build files.
-if ! docker build \
+docker build \
     --pull \
     --ulimit nofile=512 \
     --build-arg osdistro=$osdistro \
@@ -88,9 +89,8 @@ if ! docker build \
     --build-arg debversion=$debversion \
     -t $dockversion \
     -f Dockerfile \
-    .
-then
-    ret=$?
+    . || ret=$?
+if test ${ret:-0} != 0; then
     echo "fail" >&2
     exit $ret
 fi

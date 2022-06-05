@@ -1,4 +1,4 @@
-netradiant (1.5.0+20220215+3-0wjd1+ubu20.04) focal; urgency=medium
+netradiant (1.5.0+20220215+3-0wjd1+REL) stable; urgency=medium
 
   * Add patch to NOT replace symlink-to-map on Save
   * Add patch to avoid warnings when calling netradiant --help

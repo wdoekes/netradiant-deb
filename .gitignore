@@ -1,6 +1,5 @@
 *.swp
 
-/Dockerfile.out
+/Dockerfile.out/
 /gamepacks/
 /netradiant/
-
