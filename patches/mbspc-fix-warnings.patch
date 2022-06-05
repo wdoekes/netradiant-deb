@@ -1,0 +1,28 @@
+Description: fix -Werror for possibly uninitialized vars
+
+diff --git a/tools/mbspc/mbspc/map_hl.c b/tools/mbspc/mbspc/map_hl.c
+index c745aee1..3e74bfe0 100644
+--- a/tools/mbspc/mbspc/map_hl.c
++++ b/tools/mbspc/mbspc/map_hl.c
+@@ -633,7 +633,7 @@ bspbrush_t *HL_SplitBrushWithFace(bspbrush_t *brush, hl_dface_t *face)
+ 	hl_dplane_t plane;
+ 	vec_t *v1, *v2;
+ 	vec3_t normal, edgevec;
+-	bspbrush_t *front, *back, *brushlist;
++	bspbrush_t *front = NULL, *back, *brushlist;
+ 
+ 	memcpy(&plane, &hl_dplanes[face->planenum], sizeof(hl_dplane_t));
+ 	//check on which side of the plane the face is
+diff --git a/tools/mbspc/mbspc/map_q1.c b/tools/mbspc/mbspc/map_q1.c
+index 3649ffe9..396d455c 100644
+--- a/tools/mbspc/mbspc/map_q1.c
++++ b/tools/mbspc/mbspc/map_q1.c
+@@ -689,7 +689,7 @@ bspbrush_t *Q1_SplitBrushWithFace(bspbrush_t *brush, q1_dface_t *face)
+ 	q1_dplane_t plane;
+ 	vec_t *v1, *v2;
+ 	vec3_t normal, edgevec;
+-	bspbrush_t *front, *back, *brushlist;
++	bspbrush_t *front = NULL, *back, *brushlist;
+ 
+ 	memcpy(&plane, &q1_dplanes[face->planenum], sizeof(q1_dplane_t));
+ 	//check on which side of the plane the face is
