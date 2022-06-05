@@ -1,7 +1,6 @@
 bspc-no-strip.patch
 bspc-do-not-leave-log-turds-for-nothing.patch
 bspc-fix-warnings.patch
-mbspc-no-strip.patch
 mbspc-do-not-leave-log-turds-for-nothing.patch
 netradiant-no-g_string_free-assert.patch
 netradiant-no-move-map-symlink.patch

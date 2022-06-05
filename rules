@@ -58,7 +58,7 @@ override_dh_auto_build:
 	cmake --build build -- $(CMAKE_JOBS) VERBOSE=1
 	$(MAKE) -C tools/bspc
 	$(MAKE) -f Makefile.mbspc \
-	    DEPENDENCIES_CHECK=off CFLAGS='-g -O2' \
+	    DEPENDENCIES_CHECK=off BUILD=debug CFLAGS='-g -O2' \
 	    RADIANT_ABOUTMSG='Custom build by wdoekes' \
 	    INSTALLDIR=tools/mbspc/build tools/mbspc/build/mbspc
 
