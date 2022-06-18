@@ -44,6 +44,7 @@ override_dh_auto_configure:
 	    -DCMAKE_BUILD_TYPE=Debug \
 	    -DCMAKE_INSTALL_PREFIX=/usr \
 	    -DFHS_INSTALL=ON \
+	    -DFHS_INSTALL_ABSOLUTE=ON \
 	    -DBUNDLE_LIBRARIES=OFF \
 	    -DBUILD_RADIANT=ON \
 	    -DBUILD_TOOLS=ON \
