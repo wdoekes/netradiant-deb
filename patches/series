@@ -3,10 +3,6 @@ bspc-do-not-leave-log-turds-for-nothing.patch
 bspc-fix-warnings.patch
 mbspc-do-not-leave-log-turds-for-nothing.patch
 mbspc-fix-warnings.patch
-netradiant-no-g_string_free-assert.patch
-netradiant-no-move-map-symlink.patch
-netradiant-path-arch.patch
-netradiant-path-bt.patch
 
 # DISABLED: because we now include "mbspc"
 #game-q3-bspc.patch
