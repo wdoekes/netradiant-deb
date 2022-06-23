@@ -74,6 +74,6 @@ override_dh_auto_install:
 	cmake --build build -- VERBOSE=1 DESTDIR=$(CURDIR)/debian/tmp install
 	# Have the TTimo bspc be bspc.ttimo, the netradiant-custom mbspc
 	# the new, and make a symlink from bspc to mbspc.
-	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/bin/bspc.ttimo
-	install tools/mbspc/build/mbspc.* $(CURDIR)/debian/tmp/usr/bin/mbspc
-	ln -s mbspc $(CURDIR)/debian/tmp/usr/bin/bspc
+	install tools/bspc/bspc $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/netradiant/bspc.ttimo
+	install tools/mbspc/build/mbspc.* $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/netradiant/mbspc
+	ln -s mbspc $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/netradiant/bspc

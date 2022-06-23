@@ -54,8 +54,9 @@ are not recorded.)
 
 The ``netradiant*.deb`` holds files in::
 
-    - /usr/bin (netradiant, bspc, mbspc, daemonmap, q2map, q3map2, ...)
-    - /usr/lib/x86_64-linux-gnu/netradiant (plugins/modules)
+    - /usr/bin (netradiant)
+    - /usr/lib/x86_64-linux-gnu/netradiant (plugins and modules)
+    - /usr/lib/x86_64-linux-gnu/netradiant (also: bspc, mbspc, q2map, q3map2..)
     - /usr/share/netradiant (arch independent data files, images)
 
 The ``netradiant-game-quake3*.deb`` holds files in::
@@ -70,16 +71,23 @@ Running NetRadiant
 Starting should be a matter of running ``netradiant``::
 
     $ dpkg -L netradiant | grep ^/usr/bin/
-    /usr/bin/bspc
-    /usr/bin/bspc.ttimo
-    /usr/bin/daemonmap
-    /usr/bin/h2data
-    /usr/bin/mbspc
     /usr/bin/netradiant
-    /usr/bin/q2map
-    /usr/bin/q3data
-    /usr/bin/q3map2
-    /usr/bin/qdata3
+
+Tools have been moved to the libdir, so they don't conflict with
+possible other radiant installs::
+
+    $ dpkg -L netradiant | grep '^/usr/lib/x86_64-linux-gnu/netradiant/[^/]*$'
+    /usr/lib/x86_64-linux-gnu/netradiant/bspc
+    /usr/lib/x86_64-linux-gnu/netradiant/bspc.ttimo
+    /usr/lib/x86_64-linux-gnu/netradiant/daemonmap
+    /usr/lib/x86_64-linux-gnu/netradiant/h2data
+    /usr/lib/x86_64-linux-gnu/netradiant/mbspc
+    /usr/lib/x86_64-linux-gnu/netradiant/modules
+    /usr/lib/x86_64-linux-gnu/netradiant/plugins
+    /usr/lib/x86_64-linux-gnu/netradiant/q2map
+    /usr/lib/x86_64-linux-gnu/netradiant/q3data
+    /usr/lib/x86_64-linux-gnu/netradiant/q3map2
+    /usr/lib/x86_64-linux-gnu/netradiant/qdata3
 
 Game configuration will be stored in ``~/.config/netradiant``::
 
@@ -93,18 +101,24 @@ Game configuration will be stored in ``~/.config/netradiant``::
 
 Shader config is scanned in this order (continues even when found)::
 
-    ~/Documents/q3maps/baseq3/scripts/shaderlist.txt
+    /usr/share/netradiant/gamepacks/q3.game/baseq3/scripts/shaderlist.txt
     ~/.q3a/baseq3/scripts/shaderlist.txt
     /usr/share/netradiant/base/scripts/shaderlist.txt
 
 Shader image locations are scanned in this order (stops when found)::
 
     /usr/share/netradiant/base/textures/common/watercaulk.jpg
-    ~/.q3a/baseq3/textures/common/watercaulk.jpg
-    ~/Documents/q3maps/baseq3/textures/common/watercaulk.jpg
+    ~/baseq3/textures/common/watercaulk.jpg
+    /usr/share/netradiant/gamepacks/q3.game/baseq3/textures/common/watercaulk.jpg
     /usr/share/netradiant/base/textures/common/watercaulk.tga
     ~/.q3a/baseq3/textures/common/watercaulk.tga
-    ~/Documents/q3maps/baseq3/textures/common/watercaulk.tga
+    /usr/share/netradiant/gamepacks/q3.game/baseq3/textures/common/watercaulk.tga
+    /usr/share/netradiant/base/textures/common/watercaulk.png
+    ~/.q3a/baseq3/textures/common/watercaulk.png
+    /usr/share/netradiant/gamepacks/q3.game/baseq3/textures/common/watercaulk.png
+
+This assumes you've set ``/usr/share/netradiant/gamepacks/q3.game/`` as
+your ``EnginePath``.
 
 
 Other

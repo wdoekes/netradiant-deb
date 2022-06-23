@@ -1,0 +1,72 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c2d795c8..128589ff 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -483,7 +483,7 @@ endif ()
+ #-----------------------------------------------------------------------
+ 
+ if (BUILD_BINARIES)
+-    macro (radiant_tool name)
++    macro (radiant_main name)
+         add_dependencies(binaries ${name})
+ 
+         if (WIN32)
+@@ -500,6 +500,32 @@ if (BUILD_BINARIES)
+         )
+     endmacro ()
+ 
++    macro (radiant_tool name)
++        add_dependencies(binaries ${name})
++
++        if (WIN32)
++            add_executable(${name} ${ARGN} ${PROJECT_SOURCE_DIR}/include/lib.rc)
++        else ()
++            add_executable(${name} ${ARGN})
++        endif()
++
++        copy_dlls(${name})
++
++        if (FHS_INSTALL)
++            # Place the tools in the libdir, not in /usr/bin. We do this
++            # because other forks provide tools with the same name too.
++            install(
++                TARGETS ${name}
++                RUNTIME DESTINATION ${RADIANT_ADDONS_DIR}
++            )
++        else ()
++            install(
++                TARGETS ${name}
++                RUNTIME DESTINATION ${RADIANT_BIN_DIR}
++            )
++        endif ()
++    endmacro ()
++
+     if (BUILD_RADIANT)
+         add_subdirectory(radiant)
+     endif ()
+diff --git a/radiant/CMakeLists.txt b/radiant/CMakeLists.txt
+index f93b00cf..fd76128a 100644
+--- a/radiant/CMakeLists.txt
++++ b/radiant/CMakeLists.txt
+@@ -94,7 +94,7 @@ if (WIN32)
+     list(APPEND RADIANTLIST multimon.cpp multimon.h)
+ endif ()
+ 
+-radiant_tool(${RADIANT_BASENAME} WIN32 radiant.rc ${RADIANTLIST})
++radiant_main(${RADIANT_BASENAME} WIN32 radiant.rc ${RADIANTLIST})
+ add_dependencies(${RADIANT_BASENAME} modules)
+ target_link_libraries(${RADIANT_BASENAME}
+     ${CMAKE_DL_LIBS}
+diff --git a/radiant/qe3.cpp b/radiant/qe3.cpp
+index 3b015aa4..30aa9b6c 100644
+--- a/radiant/qe3.cpp
++++ b/radiant/qe3.cpp
+@@ -193,7 +193,7 @@ void bsp_init(){
+ 	build_set_variable( "ExecutableType", exe_ext[0] == '\0' ? exe_ext : exe_ext + 1 );
+ 
+ 	build_set_variable( "ExecutableExt", GDEF_OS_EXE_EXT );
+-	build_set_variable( "RadiantPath", AppPath_get() );
++	build_set_variable( "RadiantPath", LibPath_get() );
+ 	build_set_variable( "EnginePath", EnginePath_get() );
+ 	build_set_variable( "UserEnginePath", g_qeglobals.m_userEnginePath.c_str() );
+ 

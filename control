@@ -34,10 +34,6 @@ Depends:
  ${shlibs:Depends},
  ${misc:Depends}
 Suggests: netradiant-game-quake3
-# Conflicts with gtkradiant/netradiant, because they all include the
-# toolchain (q3map2, q3data, bspc, ...). Providing something is not
-# sufficient to block simultaneous install. We also need Conflicts.
-Conflicts: gtkradiant
 Description: netradiant contains (xonotic) NetRadiant and tools
  NetRadiant is the open source cross platform level editor for idTech
  games. This package contains the radiant editor, q3map2 compilers and
