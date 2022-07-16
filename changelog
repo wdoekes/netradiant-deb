@@ -1,4 +1,4 @@
-netradiant (1.5.0+20220629+1-WIP+REL) stable; urgency=medium
+netradiant (1.5.0+20220629+1-0wjd1+REL) stable; urgency=medium
 
   * Update upstream.
   * Move source files around into ./source-files/.
