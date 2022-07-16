@@ -5,6 +5,9 @@
 /README.rst
 /README-quake3.rst
 
+# We make gamepacks.install in Dockerfile.build.
+/source-files/gamepacks.source
+
 /.dockerignore
 /.git
 /.gitignore

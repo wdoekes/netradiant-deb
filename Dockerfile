@@ -50,10 +50,14 @@ RUN . /etc/os-release && \
 
 # Set up upstream source, move debian dir and jump into dir.
 # We want the current NetRadiant build, but we do not need everything in the .git folder.
-COPY ./netradiant/ /build/netradiant
+COPY ./source-files/netradiant/ /build/netradiant
 WORKDIR /build/netradiant
 
-# Fix (TTimo) bspc path, clean it, make SOURCE_VERSION, check for checksum patch:
+# Add gamepacks
+COPY ./source-files/gamepacks.install/ /build/netradiant/gamepacks
+
+# Add (TTimo) bspc, fix (TTimo) bspc path, clean it, make SOURCE_VERSION, check for checksum patch:
+COPY ./source-files/bspc/ /build/netradiant/tools/bspc
 RUN cd tools/bspc && \
     git clean -dfx && \
     find . -name '.git' | \
@@ -61,14 +65,13 @@ RUN cd tools/bspc && \
     git branch --contains 8aa16e1986a1ac93f5992e144552eccab27035c1 | grep -xF '* master'
 
 # Fix mbspc path, clean it, make SOURCE_VERSION, remove non-mbspc stuff:
-RUN cd netradiant-custom && \
+COPY ./source-files/netradiant-custom/ /build/netradiant-custom
+RUN cd ../netradiant-custom && \
     git clean -dfx && \
     cp libs/bytebool.h ./tools/mbspc/ && \
     git show > ./tools/mbspc/SOURCE_VERSION && \
-    mv ./tools/mbspc ../tools/mbspc/ && \
-    sed -e 's@Ilibs@Itools/mbspc@' Makefile >../Makefile.mbspc && \
-    cd .. && \
-    rm -rf netradiant-custom
+    mv ./tools/mbspc ../netradiant/tools/mbspc/ && \
+    sed -e 's@Ilibs@Itools/mbspc@' Makefile >../netradiant/Makefile.mbspc
 
 # Make clean, reproducible tar, with 1970 timestamps, sorted, etc..
 RUN git clean -dfx \
@@ -96,7 +99,7 @@ RUN git clean -dfx \
 
 # Make new debian dir and add everything this time (use our modified changelog).
 RUN mkdir debian && mv /build/debian/changelog debian/changelog
-COPY compat control rules netradiant.* netradiant-* debian/
+COPY compat control rules netradiant* debian/
 COPY patches debian/patches
 COPY source debian/source
 

@@ -3,7 +3,7 @@ cd "$(dirname "$0")"  # jump to curdir
 set -eu
 
 # Pass these on the command line.
-oscodename=${1:-ubuntu/focal}  # ubuntu/focal
+oscodename=${1:-ubuntu/jammy}  # ubuntu/focal
 upname=netradiant
 upversion=${2:-1.5.0}       # NetRadiant version
 debepoch=
@@ -43,28 +43,31 @@ git_pull_or_clone() {
 }
 
 # Ensure we have NetRadiant.
-git_pull_or_clone netradiant https://gitlab.com/xonotic/netradiant.git
+git_pull_or_clone source-files/netradiant \
+    https://gitlab.com/xonotic/netradiant.git
 # Improve versioning, based on the git version.
-version_suffix=$(git -C netradiant log --date=short --format='%cd' |
-                 tr -d '-' | uniq -c | head -n1 | awk '{print $2 "+" $1}')
+version_suffix=$(\
+    git -C source-files/netradiant log --date=short --format='%cd' |
+    tr -d '-' | uniq -c | head -n1 | awk '{print $2 "+" $1}')
 
-# Add (m)bspc to repo as a tool.
-git_pull_or_clone netradiant/tools/bspc https://github.com/TTimo/bspc.git
-git_pull_or_clone netradiant/netradiant-custom https://github.com/Garux/netradiant-custom.git
+# Add (m)bspc tools here, we'll add them to ./netradiant/ using COPY.
+git_pull_or_clone source-files/bspc https://github.com/TTimo/bspc.git
+git_pull_or_clone source-files/netradiant-custom \
+    https://github.com/Garux/netradiant-custom.git
 
 # Fetch game packs
 #GAMES='Quake2 Quake3'  # or 'all'
 GAMES=all
-if test $(du -sb gamepacks/ | cut -f1) -lt 101099099; then
-    ./netradiant/gamepack-manager \
-	--download-dir gamepacks \
+if test $(du -sb source-files/gamepacks.source/ | cut -f1) -lt 101099099; then
+    ./source-files/netradiant/gamepack-manager \
+	--download-dir source-files/gamepacks.source \
 	--name "$GAMES" \
 	--download
 fi
-if test $(du -sb netradiant/gamepacks/ | cut -f1) -lt 8099099; then
+if test $(du -sb source-files/gamepacks.install/ | cut -f1) -lt 8099099; then
     ./netradiant/gamepack-manager \
-	--download-dir gamepacks \
-	--install-dir netradiant/gamepacks \
+	--download-dir source-files/gamepacks.source \
+	--install-dir source-files/gamepacks.install \
 	--name "$GAMES" \
 	--install
 fi

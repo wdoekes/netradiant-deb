@@ -82,8 +82,6 @@ possible other radiant installs::
     /usr/lib/x86_64-linux-gnu/netradiant/daemonmap
     /usr/lib/x86_64-linux-gnu/netradiant/h2data
     /usr/lib/x86_64-linux-gnu/netradiant/mbspc
-    /usr/lib/x86_64-linux-gnu/netradiant/modules
-    /usr/lib/x86_64-linux-gnu/netradiant/plugins
     /usr/lib/x86_64-linux-gnu/netradiant/q2map
     /usr/lib/x86_64-linux-gnu/netradiant/q3data
     /usr/lib/x86_64-linux-gnu/netradiant/q3map2
@@ -99,16 +97,20 @@ Game configuration will be stored in ``~/.config/netradiant``::
     ~/.config/netradiant/radiant.log
     ~/.config/netradiant/XMLDump.xml
 
-Shader config is scanned in this order (continues even when found)::
+If you set paths as follows::
+
+    EnginePath = /usr/share/netradiant/gamepacks/q3.game/
+
+Then shader lists are scanned in this order (continues even when found)::
 
     /usr/share/netradiant/gamepacks/q3.game/baseq3/scripts/shaderlist.txt
     ~/.q3a/baseq3/scripts/shaderlist.txt
     /usr/share/netradiant/base/scripts/shaderlist.txt
 
-Shader image locations are scanned in this order (stops when found)::
+And shader image locations are scanned in this order (stops when found)::
 
     /usr/share/netradiant/base/textures/common/watercaulk.jpg
-    ~/baseq3/textures/common/watercaulk.jpg
+    ~/.q3a/baseq3/textures/common/watercaulk.jpg
     /usr/share/netradiant/gamepacks/q3.game/baseq3/textures/common/watercaulk.jpg
     /usr/share/netradiant/base/textures/common/watercaulk.tga
     ~/.q3a/baseq3/textures/common/watercaulk.tga
@@ -116,9 +118,6 @@ Shader image locations are scanned in this order (stops when found)::
     /usr/share/netradiant/base/textures/common/watercaulk.png
     ~/.q3a/baseq3/textures/common/watercaulk.png
     /usr/share/netradiant/gamepacks/q3.game/baseq3/textures/common/watercaulk.png
-
-This assumes you've set ``/usr/share/netradiant/gamepacks/q3.game/`` as
-your ``EnginePath``.
 
 
 Other

@@ -1,3 +1,15 @@
+netradiant (1.5.0+20220629+1-WIP+REL) stable; urgency=medium
+
+  * Update upstream.
+  * Move source files around into ./source-files/.
+  * Moved the tools from /usr/bin to to libdir. This way we don't need to
+    Conflict with GtkRadiant or NRC (nrcradiant) anymore.
+  * TODO: chromium snaps can read in /usr/share/doc, but not in
+    /usr/share/*radiant/... So, we should really try to move the docs if
+    possible. Otherwise the Jump-to-help doesn't work very well.
+
+ -- Walter Doekes <wjdoekes+netradiant@osso.nl>  Sat, 16 Jul 2022 20:38:00 +0200
+
 netradiant (1.5.0+20220215+3-0wjd2+REL) stable; urgency=medium
 
   * Split up dpkg-buildpackage steps in Dockerfile. Other build
@@ -5,9 +17,6 @@ netradiant (1.5.0+20220215+3-0wjd2+REL) stable; urgency=medium
   * The main package now Provides "gtkradiant-fork" so others can ensure
     they're not conflicting with this one.
   * Add build for Ubuntu/Jammy.
-  * TODO: chromium snaps can read in /usr/share/doc, but not in
-    /usr/share/*radiant/... So, we should really try to move the docs if
-    possible. Otherwise the Jump-to-help doesn't work very well.
 
  -- Walter Doekes <wjdoekes+netradiant@osso.nl>  Sun, 05 Jun 2022 13:31:12 +0200
 
