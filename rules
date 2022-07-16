@@ -48,7 +48,7 @@ override_dh_auto_configure:
 	    -DBUNDLE_LIBRARIES=OFF \
 	    -DBUILD_RADIANT=ON \
 	    -DBUILD_TOOLS=ON \
-	    -DRADIANT_ABOUTMSG="Custom build by wdoekes" \
+	    -DRADIANT_ABOUTMSG="Custom build by wdoekes/netradiant-deb" \
 	    -DBUILD_DAEMONMAP=ON \
 	    -DBUILD_CRUNCH=ON \
 	    -DDOWNLOAD_GAMEPACKS=OFF \
@@ -60,7 +60,7 @@ override_dh_auto_build:
 	$(MAKE) -C tools/bspc
 	$(MAKE) -f Makefile.mbspc \
 	    DEPENDENCIES_CHECK=off BUILD=debug CFLAGS='-g -O2' \
-	    RADIANT_ABOUTMSG='Custom build by wdoekes' \
+	    RADIANT_ABOUTMSG='Custom build by wdoekes/netradiant-deb' \
 	    INSTALLDIR=tools/mbspc/build tools/mbspc/build/mbspc
 
 override_dh_auto_test:
