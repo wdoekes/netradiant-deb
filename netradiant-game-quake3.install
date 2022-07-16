@@ -1,2 +1,8 @@
 gamepacks/games/q3.game usr/share/netradiant/gamepacks/games/
-gamepacks/q3.game usr/share/netradiant/gamepacks/
+
+gamepacks/q3.game/baseq3 usr/share/netradiant/gamepacks/q3.game/
+gamepacks/q3.game/default_build_menu.xml usr/share/netradiant/gamepacks/q3.game/
+gamepacks/q3.game/game.xlink usr/share/netradiant/gamepacks/q3.game/
+gamepacks/q3.game/missionpack usr/share/netradiant/gamepacks/q3.game/
+
+gamepacks/q3.game/docs usr/share/doc/netradiant/gamepacks/q3.game/

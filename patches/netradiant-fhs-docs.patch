@@ -1,0 +1,51 @@
+Description: move game docs to /usr/share/doc/netradiant
+ This way the sandboxed browsers will be able to open the manuals.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c2d795c8..df72be0d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -129,6 +129,7 @@ set(RADIANT_LIB_DIR ${FINAL_INSTALL_PREFIX}/lib CACHE INTERNAL "...")
+ set(RADIANT_ADDONS_DIR ${FINAL_INSTALL_PREFIX} CACHE INTERNAL "...")
+ set(RADIANT_SHARE_DIR ${FINAL_INSTALL_PREFIX}/share CACHE INTERNAL "...")
+ set(RADIANT_DATA_DIR ${FINAL_INSTALL_PREFIX} CACHE INTERNAL "...")
++set(RADIANT_DOC_DIR ${FINAL_INSTALL_PREFIX}/docs CACHE INTERNAL "...")
+ 
+ if (FHS_INSTALL)
+     add_definitions(-DRADIANT_FHS_INSTALL='ON')
+@@ -138,11 +139,13 @@ if (FHS_INSTALL)
+     set(RADIANT_ADDONS_DIR ${RADIANT_LIB_DIR}/${RADIANT_BASENAME})
+     set(RADIANT_SHARE_DIR ${FINAL_INSTALL_PREFIX}/share)
+     set(RADIANT_DATA_DIR ${RADIANT_SHARE_DIR}/${RADIANT_BASENAME})
++    set(RADIANT_DOC_DIR ${RADIANT_SHARE_DIR}/doc/${RADIANT_BASENAME})
+     set(RADIANT_LIB_DIR ${FINAL_INSTALL_PREFIX}/lib/${CMAKE_LIBRARY_ARCHITECTURE})
+ 
+     if (FHS_INSTALL_ABSOLUTE)
+         add_definitions(-DRADIANT_ADDONS_DIR="${RADIANT_ADDONS_DIR}")
+         add_definitions(-DRADIANT_DATA_DIR="${RADIANT_DATA_DIR}")
++        add_definitions(-DRADIANT_DOC_DIR="${RADIANT_DOC_DIR}")
+     else ()
+         add_definitions(-DRADIANT_LIB_ARCH="${CMAKE_LIBRARY_ARCHITECTURE}")
+     endif ()
+diff --git a/radiant/help.cpp b/radiant/help.cpp
+index 0b6bf297..c487b0b5 100644
+--- a/radiant/help.cpp
++++ b/radiant/help.cpp
+@@ -121,7 +121,16 @@ void create_game_help_menu( ui::Menu menu ){
+ #if 1
+ 	filename.clear();
+ 	filename << g_pGameDescription->mGameToolsPath.c_str() << "game.xlink";
+-	process_xlink( filename.c_str(), g_pGameDescription->getRequiredKeyValue( "name" ), g_pGameDescription->mGameToolsPath.c_str(), menu );
++	StringOutputStream base_url( 256 );
++	base_url << g_pGameDescription->mGameToolsPath.c_str();
++#if defined(RADIANT_FHS_INSTALL) && defined(RADIANT_DATA_DIR) && defined(RADIANT_DOC_DIR)
++	if (strncmp(base_url.c_str(), RADIANT_DATA_DIR, strlen(RADIANT_DATA_DIR)) == 0) {
++		base_url.clear();
++		base_url << RADIANT_DOC_DIR << (
++			g_pGameDescription->mGameToolsPath.c_str() + strlen(RADIANT_DATA_DIR));
++	}
++#endif
++	process_xlink( filename.c_str(), g_pGameDescription->getRequiredKeyValue( "name" ), base_url.c_str(), menu );
+ #else
+ 	for ( std::list<CGameDescription *>::iterator iGame = g_GamesDialog.mGames.begin(); iGame != g_GamesDialog.mGames.end(); ++iGame )
+ 	{

@@ -3,6 +3,7 @@ bspc-do-not-leave-log-turds-for-nothing.patch
 bspc-fix-warnings.patch
 mbspc-do-not-leave-log-turds-for-nothing.patch
 mbspc-fix-warnings.patch
+netradiant-fhs-docs.patch
 netradiant-tools-in-usr-lib.patch
 
 # DISABLED: because we now include "mbspc"
