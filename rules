@@ -42,6 +42,7 @@ override_dh_auto_configure:
 	# version in a different fashion. It will record only 1.5.0n.
 	cmake -G "Unix Makefiles" -S. -Bbuild \
 	    -DCMAKE_BUILD_TYPE=Debug \
+	    -DCMAKE_CXX_FLAGS='-D_GLIBCXX_ASSERTIONS' \
 	    -DCMAKE_INSTALL_PREFIX=/usr \
 	    -DFHS_INSTALL=ON \
 	    -DFHS_INSTALL_ABSOLUTE=ON \
