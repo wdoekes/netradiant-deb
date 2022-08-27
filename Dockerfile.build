@@ -77,7 +77,7 @@ upversion="$upversion+$version_suffix"
 
 # Docker disallows certain tokens in versions.
 dockversion=$(echo build-${upname}-${upversion}-${debversion}-${oscodename} |
-    sed -e 's/[^0-9A-Za-z_.-]/_/g')
+    sed -e 's/[^0-9A-Za-z_.-]/_/g' | tr '[:upper:]' '[:lower:]')
 
 # Will build files.
 docker build \

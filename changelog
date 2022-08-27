@@ -1,3 +1,12 @@
+netradiant (1.5.0+20220818+2-WIP+REL) stable; urgency=medium
+
+  * Bump upstream version.
+  * Add CXX debug assertions after
+    https://gitlab.com/xonotic/netradiant/-/issues/156
+  * UNRELEASED/FIXME
+
+ -- Walter Doekes <wjdoekes+netradiant@osso.nl>  Sat, 27 Aug 2022 12:16:40 +0200
+
 netradiant (1.5.0+20220629+1-0wjd1+REL) stable; urgency=medium
 
   * Update upstream.
